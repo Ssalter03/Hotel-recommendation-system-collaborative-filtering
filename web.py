@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import unicodedata
-from pyspark.sql import SparkSession
 from pyspark.ml.recommendation import ALS
 from pyspark.ml.feature import StringIndexerModel
 
