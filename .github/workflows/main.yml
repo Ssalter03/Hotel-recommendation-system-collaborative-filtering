@@ -16,14 +16,6 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      # 2. Xử lý cài đặt các package phụ trợ nếu có trong file packages.txt
-      - name: Install other packages from packages.txt
-        run: |
-          sudo apt-get update
-          if [ -s packages.txt ]; then
-            xargs -a packages.txt sudo apt-get install -y --ignore-missing
-          fi
-
       # 3. Sử dụng link Apache Archive chính thức để đảm bảo luôn tải được file Hadoop 3.3.6
       - name: Set up Hadoop 3.3.6
         run: |
