@@ -9,14 +9,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 1. Khởi tạo Java 11 từ nguồn chính thống của GitHub Actions
+      # 1. Cài đặt chính xác Java 11 từ GitHub Actions
       - name: Set up JDK 11
         uses: actions/setup-java@v4
         with:
           java-version: '11'
           distribution: 'temurin'
 
-      # 3. Sử dụng link Apache Archive chính thức để đảm bảo luôn tải được file Hadoop 3.3.6
+      # 2. Tải và giải nén Hadoop từ đường dẫn lưu trữ cố định (Link trực tiếp file tar.gz)
       - name: Set up Hadoop 3.3.6
         run: |
           wget https://apache.org
@@ -24,7 +24,7 @@ jobs:
           echo "HADOOP_HOME=$GITHUB_WORKSPACE/hadoop-3.3.6" >> $GITHUB_ENV
           echo "$GITHUB_WORKSPACE/hadoop-3.3.6/bin" >> $GITHUB_PATH
 
-      # 4. Kiểm tra thành quả tích hợp hệ thống
+      # 3. Kiểm tra kết quả tích hợp hệ thống
       - name: Verify Environment
         run: |
           java -version
