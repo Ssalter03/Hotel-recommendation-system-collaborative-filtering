@@ -1,0 +1,23 @@
+name: Test Packages Configuration
+
+on: [push, pull_request]
+
+jobs:
+  test-java:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install packages from packages.txt
+        run: |
+          sudo apt-get update
+          xargs -a packages.txt sudo apt-get install -y
+
+      - name: Verify Java Installation
+        run: |
+          java -version
+          javac -version
+
+      - name: Check Java Home Path
+        run: update-java-alternatives --list
