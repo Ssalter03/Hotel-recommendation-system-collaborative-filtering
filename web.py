@@ -6,6 +6,7 @@ from pyspark.ml.recommendation import ALS
 from pyspark.ml.feature import StringIndexerModel
 
 
+
 st.markdown("""
     <style>
         /* Tăng size chữ chung cho toàn bộ text của Streamlit */
@@ -101,8 +102,17 @@ def get_vietnam_cities(df):
 cities_list = get_vietnam_cities(hotel_info)
 
 # ===== Khởi tạo SparkSession và load model =====
+from pyspark.sql import SparkSession
+
+# Cấu hình giảm bộ nhớ để thích nghi với server Streamlit Cloud yếu
 if "spark" not in st.session_state:
-    st.session_state.spark = SparkSession.builder.appName("HotelRecommendation").getOrCreate()
+    st.session_state.spark = SparkSession.builder \
+        .appName("HotelRecsStreamlit") \
+        .config("spark.driver.memory", "512m") \
+        .config("spark.executor.memory", "512m") \
+        .config("spark.sql.shuffle.partitions", "2") \
+        .getOrCreate()
+    
 if "hotel_indexer_model" not in st.session_state:
     try:
         st.session_state.hotel_indexer_model = StringIndexerModel.load("models/hotel_indexer")
