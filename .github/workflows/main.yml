@@ -9,20 +9,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 1. Cài đặt chính xác Java 11 thông qua action chính chủ của GitHub
+      # 1. Cài đặt chính xác Java 11 (Đặt lên đầu tiên)
       - name: Set up JDK 11
         uses: actions/setup-java@v4
         with:
           java-version: '11'
           distribution: 'temurin'
 
-      # 2. Cài đặt các gói phụ khác từ packages.txt nếu bạn vẫn cần dùng (bỏ default-jdk ra khỏi file này)
+      # 2. Cài đặt các gói phụ từ packages.txt (Nếu file này trống thì bỏ qua bước này)
       - name: Install other packages from packages.txt
         run: |
           sudo apt-get update
-          xargs -a packages.txt sudo apt-get install -y --ignore-missing
+          if [ -s packages.txt ]; then
+            xargs -a packages.txt sudo apt-get install -y --ignore-missing
+          fi
 
-      # 3. Tải và cấu hình Hadoop 3.3.6 (Bản dành cho Linux)
+      # 3. Tải và giải nén Hadoop 3.3.6 với đường dẫn chuẩn trực tiếp
       - name: Set up Hadoop 3.3.6
         run: |
           wget https://apache.org
@@ -30,7 +32,7 @@ jobs:
           echo "HADOOP_HOME=$GITHUB_WORKSPACE/hadoop-3.3.6" >> $GITHUB_ENV
           echo "$GITHUB_WORKSPACE/hadoop-3.3.6/bin" >> $GITHUB_PATH
 
-      # 4. Xác minh lại toàn bộ môi trường
+      # 4. Kiểm tra lại phiên bản của Java và Hadoop xem đã nhận đủ chưa
       - name: Verify Environment
         run: |
           java -version
