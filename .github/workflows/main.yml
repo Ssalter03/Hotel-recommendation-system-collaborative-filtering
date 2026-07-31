@@ -1,31 +1,31 @@
 name: Test Packages Configuration
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
 
 jobs:
   test-java-hadoop:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
 
-      # 1. Cài đặt chính xác Java 11 từ GitHub Actions
-      - name: Set up JDK 11
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 11
         uses: actions/setup-java@v4
         with:
+          distribution: temurin
           java-version: '11'
-          distribution: 'temurin'
 
-      # 2. Tải và giải nén Hadoop từ đường dẫn lưu trữ cố định (Link trực tiếp file tar.gz)
-      - name: Set up Hadoop 3.3.6
+      - name: Install Hadoop
         run: |
-          wget https://apache.org
+          wget https://archive.apache.org/dist/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz
           tar -xzf hadoop-3.3.6.tar.gz
-          echo "HADOOP_HOME=$GITHUB_WORKSPACE/hadoop-3.3.6" >> $GITHUB_ENV
-          echo "$GITHUB_WORKSPACE/hadoop-3.3.6/bin" >> $GITHUB_PATH
 
-      # 3. Kiểm tra kết quả tích hợp hệ thống
-      - name: Verify Environment
+          echo "HADOOP_HOME=$PWD/hadoop-3.3.6" >> $GITHUB_ENV
+          echo "$PWD/hadoop-3.3.6/bin" >> $GITHUB_PATH
+
+      - name: Verify
         run: |
           java -version
           javac -version
