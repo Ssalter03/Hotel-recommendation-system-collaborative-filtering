@@ -1,0 +1,1 @@
+Để chạy được project này trên Windows, máy tính của bạn cần có Java JDK 11 và Hadoop 3.3.6 Winutils được cấu hình trong Environment Variables.Gõ pip install -r requirements.txt là ứng dụng sẽ chạy mượt mà không lo dính lỗi Java metadata hay đường dẫn

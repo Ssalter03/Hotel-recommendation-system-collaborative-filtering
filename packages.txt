@@ -1,0 +1,4 @@
+default-jdk
+libblas3
+liblapack3
+gfortran
