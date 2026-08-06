@@ -847,7 +847,7 @@ elif menu_selection == "🏨 Khám phá thông tin khách sạn":
         with st.container(border=True):
             st.markdown(f"## 🏨 {selected_hotel.get('Hotel_Name', 'Đang cập nhật')}")
             st.markdown(f"**📍 Địa chỉ:** {selected_hotel.get('Hotel_Address', 'Đang cập nhật')}")
-            st.markdown(f"- ⭐ Total Score: {format_number(selected_hotel.get('Total_Score', 'N/A'), decimals=2)}")
+            st.markdown(f" ⭐ Total Score: {format_number(selected_hotel.get('Total_Score', 'N/A'), decimals=2)}")
 
             with st.expander(" Xem toàn bộ mô tả chi tiết", expanded=True):
                 render_star_ratings(selected_hotel)
