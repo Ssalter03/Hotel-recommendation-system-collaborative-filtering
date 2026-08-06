@@ -874,7 +874,7 @@ elif menu_selection == "🧠 Tìm khách sạn tương đồng":
                         with st.container(border=True):
                             st.markdown(f"## 🏨 {row.get('Hotel_Name', 'Đang cập nhật')}")
                             st.markdown(f"**📍 Địa chỉ:** {row.get('Hotel_Address', 'Đang cập nhật')}")
-                            st.markdown(f"- ⭐ Total Score: {format_number(row.get('Total_Score', 'N/A'), decimals=2)}")
+                            st.markdown(f" ⭐ Total Score: {format_number(row.get('Total_Score', 'N/A'), decimals=2)}")
                             with st.expander(" Xem toàn bộ mô tả chi tiết"):
                                 render_star_ratings(row)
                                 st.write(str(row.get('Hotel_Description', 'Đang cập nhật')).strip())
