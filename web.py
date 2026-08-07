@@ -21,6 +21,11 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 if current_dir not in sys.path:
     sys.path.append(current_dir)
 
+# ===== ĐẢM BẢO PYTHON NHẬN DIỆN THƯ MỤC FUNCTIONS =====
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.append(current_dir)
+
 try:
     from functions.hotel_insight import (
         generate_hotel_report,
@@ -36,8 +41,8 @@ try:
         plot_review_trend_by_month,
         plot_review_trend_by_year
     )
-except ImportError:
-    pass
+except Exception as e:
+    st.error(f"❌ Không thể import file functions/hotel_insight.py. Chi tiết lỗi: {e}")
 
 # =========================================================
 # CẤU HÌNH TRANG WEB CHÍNH & LOAD ẢNH THEO ĐƯỜNG DẪN TUYỆT ĐỐI
