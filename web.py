@@ -162,6 +162,31 @@ st.markdown(
             font-weight: 700 !important;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         }}
+
+        .business-card {{
+            background: var(--secondary-background-color);
+            color: var(--text-color);
+            border: 1px solid rgba(87, 160, 241, 0.42);
+            border-radius: 18px;
+            padding: 1rem;
+            height: 100%;
+            margin: 0.4rem 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }}
+        .business-card-title {{
+            font-size: 1.05rem !important;
+            font-weight: 800 !important;
+            color: var(--text-color);
+            margin-bottom: 0.5rem !important;
+        }}
+        .business-card-body {{
+            margin: 0 !important;
+            font-size: 0.98rem !important;
+            line-height: 1.55 !important;
+            color: var(--text-color);
+            opacity: 0.95;
+        }}
+
         .quick-action-card {{
             background: var(--secondary-background-color);
             color: var(--text-color);
@@ -193,6 +218,27 @@ st.markdown(
             border-radius: 999px;
             background: linear-gradient(90deg, rgba(45, 130, 221, 0.85), rgba(45, 130, 221, 0.15));
             margin: 1rem 0 0.9rem 0;
+        }}
+        .workflow-card {{
+            background: var(--secondary-background-color);
+            border: 1px solid rgba(87, 160, 241, 0.42);
+            border-radius: 18px;
+            padding: 1rem 1.15rem;
+            margin: 0.35rem 0 1rem 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }}
+        .workflow-title {{
+            font-size: 1rem !important;
+            font-weight: 800 !important;
+            margin: 0 0 0.4rem 0 !important;
+            color: var(--text-color);
+        }}
+        .workflow-flow {{
+            font-size: 1.02rem !important;
+            font-weight: 600 !important;
+            line-height: 1.6 !important;
+            color: var(--text-color);
+            opacity: 0.96;
         }}
         .similarity-hero {{
             position: relative;
@@ -599,7 +645,6 @@ render_nav_button("🎯 Gợi ý khách sạn", "🎯 Gợi ý khách sạn")
 if st.session_state["show_recommendations"]:
     render_nav_button("✨ Personalized Results", "personalized_results")
 
-render_nav_button("🏨 Khám phá thông tin khách sạn", "🏨 Khám phá thông tin khách sạn")
 render_nav_button("📊 Hotel Insight Report", "📊 Hotel Insight Report")
 
 st.sidebar.markdown("<div class='sidebar-section-label'>Thông tin về dự án</div>", unsafe_allow_html=True)
@@ -646,7 +691,6 @@ if menu_selection == "🏠 Trang chủ":
     quick_actions = [
         ("🧠 Tìm khách sạn tương đồng", "Khám phá khách sạn có mô tả tương đồng nhất bằng cosine similarity.", "🧠 Tìm khách sạn tương đồng"),
         ("🎯 Gợi ý theo sở thích", "Lọc theo thành phố/đường/đặc điểm rồi nhận đề xuất cá nhân hóa từ mô hình ALS.", "🎯 Gợi ý khách sạn"),
-        ("🏨 Xem insights về khách sạn", "Xem chi tiết điểm sạch sẽ, dịch vụ, giá trị tiền bạc và mô tả khách sạn.", "🏨 Khám phá thông tin khách sạn"),
         ("📊 Hotel Insight Report", "Phân tích chuyên sâu về hiệu suất vận hành, tập khách hàng và xu hướng review.", "📊 Hotel Insight Report"),
     ]
 
@@ -671,6 +715,32 @@ if menu_selection == "🏠 Trang chủ":
         col1.metric("🏨 Tổng số khách sạn", format_number(total_hotels, decimals=None))
         col2.metric("📝 Tổng số đánh giá", format_number(total_comments, decimals=None))
         col3.metric("⭐ Điểm đánh giá trung bình", format_number(avg_total_score, decimals=2))
+
+    st.markdown('<div class="section-separator"></div>', unsafe_allow_html=True)
+
+    render_section_title("Bài toán kinh doanh", "💼")
+    st.markdown("Hệ thống được thiết kế để giải quyết 4 vấn đề lớn của một nền tảng gợi ý lưu trú hiện đại:")
+
+    business_cards = [
+        ("👤 Người dùng mới", "Thiếu dữ liệu lịch sử khiến việc cá nhân hóa đề xuất trở nên khó khăn, làm giảm trải nghiệm ban đầu."),
+        ("🔍 Tìm kiếm chưa hiệu quả", "Người dùng phải mất nhiều thời gian sàng lọc giữa nhiều khách sạn có mức giá, vị trí và tiện ích khác nhau."),
+        ("📈 Khả năng mở rộng", "Hệ thống cần duy trì tốc độ phản hồi nhanh ngay cả khi số lượng khách sạn, đánh giá và người dùng ngày càng tăng."),
+        ("💡 Minh bạch trong gợi ý", "Đề xuất cần có cơ sở rõ ràng để giúp người dùng tin tưởng và tự tin hơn khi lựa chọn khách sạn."),
+    ]
+
+    card_cols = st.columns(2)
+    for index, (title, body) in enumerate(business_cards):
+        with card_cols[index % 2]:
+            st.markdown(
+                f'''
+                <div class="business-card">
+                    <div class="business-card-title">{title}</div>
+                    <div class="business-card-body">{body}</div>
+                </div>
+                ''',
+                unsafe_allow_html=True,
+            )
+
 
 # =========================================================
 # MỤC: HOTEL INSIGHT REPORT
@@ -828,17 +898,57 @@ elif menu_selection == "📊 Hotel Insight Report":
 # MỤC: SO SÁNH MODEL
 # =========================================================
 elif menu_selection == "📊 So sánh, đánh giá các models":
+
     render_section_title("Content-based Filtering", "🧠")
+
     st.markdown("### Quy trình xây dựng model")
-    st.markdown("Data overview & preparation → Data cleaning → Exploratory Data Analysis → Modeling → Evaluation → Export")
+    st.markdown(
+        '''
+        <div class="workflow-card">
+            <div class="workflow-flow">Data overview & preparation → Data cleaning → Exploratory Data Analysis → Modeling → Evaluation → Export</div>
+        </div>
+        ''',
+        unsafe_allow_html=True,
+    )
 
     st.markdown('<div class="section-separator"></div>', unsafe_allow_html=True)
+
+    st.markdown("### Các model được dùng để so sánh")
+    st.markdown("- **Gensim:** Mô hình biểu diễn văn bản và tìm kiếm tương đồng theo ngữ nghĩa.")
+    st.markdown("- **Cosine Similarity:** Đo độ tương đồng giữa các vector TF-IDF của mô tả khách sạn.")
+
+    st.markdown('<div class="section-separator"></div>', unsafe_allow_html=True)
+
+    st.markdown("### So sánh và đánh giá")
     if comparison_df is not None:
-        st.dataframe(comparison_df, use_container_width=True, hide_index=True)
+        comparison_df_display = comparison_df.copy()
+        numeric_columns = [col for col in comparison_df_display.columns if col not in ["Model"]]
+        for col in numeric_columns:
+            if pd.api.types.is_numeric_dtype(comparison_df_display[col]):
+                comparison_df_display[col] = comparison_df_display[col].round(2)
+
+        st.dataframe(comparison_df_display, use_container_width=True, hide_index=True)
+
+        selected_hotel_index = 0
+        relevant = [14, 37, 49, 101, 106, 188, 207, 245, 516, 624, 727]
+
+        st.markdown(f"- **Index khách sạn được chọn trong thử nghiệm:** {selected_hotel_index}")
+        st.markdown(f"- **Danh sách index các khách sạn liên quan trong thử nghiệm:** {relevant}")
+
+        precision_best = comparison_df.loc[comparison_df["Precision@10"].idxmax(), "Model"]
+        recall_best = comparison_df.loc[comparison_df["Recall@10"].idxmax(), "Model"]
+        f1_best = comparison_df.loc[comparison_df["F1"].idxmax(), "Model"]
+
+        st.markdown("**Nhận xét nhanh:**")
+        st.markdown(f"- **Precision@10:** {precision_best} tốt hơn.")
+        st.markdown(f"- **Recall@10:** {recall_best} tốt hơn.")
+        st.markdown(f"- **F1:** {f1_best} tốt hơn.")
+        st.markdown("- **Kết luận:** Cosine Similarity cho thấy hiệu quả tốt hơn ở các metric @10 được hiển thị.")
     else:
         st.warning("Không thể tải dữ liệu so sánh mô hình content-based.")
 
     st.markdown('<div class="section-separator"></div>', unsafe_allow_html=True)
+
     render_section_title("Collaborative Filtering", "🤝")
     
     als_summary_df = pd.DataFrame([{
@@ -1137,32 +1247,6 @@ elif menu_selection == "✨ Personalized Results":
             st.session_state["chosen_hotels_data"] = None
             st.session_state["menu_selection_key"] = "🎯 Gợi ý khách sạn"
             st.rerun()
-
-# =========================================================
-# MỤC KHÁM PHÁ THÔNG TIN KHÁCH SẠN
-# =========================================================
-elif menu_selection == "🏨 Khám phá thông tin khách sạn":
-    render_section_title("Khám phá thông tin khách sạn", "🏨")
-    render_hero_banner(
-        title="Khám phá thông tin khách sạn",
-        subtitle="Chọn một khách sạn để xem chi tiết về địa chỉ, điểm số, xếp hạng và mô tả đầy đủ.",
-        cover_uri=explore_cover_uri,
-        bg_position="center 75%"
-    )
-
-    if hotel_info is not None:
-        hotel_names = sorted({str(name).strip() for name in hotel_info["Hotel_Name"].dropna() if str(name).strip()})
-        selected_hotel_name = st.selectbox("Chọn khách sạn:", options=hotel_names)
-        selected_hotel = hotel_info[hotel_info["Hotel_Name"].astype(str).str.strip() == str(selected_hotel_name).strip()].iloc[0]
-
-        with st.container(border=True):
-            st.markdown(f"## 🏨 {selected_hotel.get('Hotel_Name', 'Đang cập nhật')}")
-            st.markdown(f"**📍 Địa chỉ:** {selected_hotel.get('Hotel_Address', 'Đang cập nhật')}")
-            st.markdown(f"- ⭐ Total Score: {format_number(selected_hotel.get('Total_Score', 'N/A'), decimals=2)}")
-
-            with st.expander("ℹ️ Thông tin chi tiết", expanded=True):
-                render_star_ratings(selected_hotel)
-                st.write(str(selected_hotel.get('Hotel_Description', 'Đang cập nhật')).strip())
 
 # =========================================================
 # MỤC CONTENT-BASED SIMILARITY
