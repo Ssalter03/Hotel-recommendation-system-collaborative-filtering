@@ -11,7 +11,7 @@ numpy>=1.24.0
 pyarrow>=12.0.0
 joblib
 scikit-learn
-plotply
+plotly
 
 # ===== HỖ TRỢ XỬ LÝ CHUỖI TIẾNG VIỆT =====
 unicodedata2>=15.1.0
