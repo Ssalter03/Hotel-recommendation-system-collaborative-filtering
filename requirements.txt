@@ -12,6 +12,7 @@ pyarrow>=12.0.0
 joblib
 scikit-learn
 plotly
+matplotlib
 
 # ===== HỖ TRỢ XỬ LÝ CHUỖI TIẾNG VIỆT =====
 unicodedata2>=15.1.0
