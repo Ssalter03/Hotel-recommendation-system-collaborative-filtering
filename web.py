@@ -820,11 +820,10 @@ elif menu_selection == "📊 Hotel Insight Report":
                 st.divider()
 
                 # Analysis Tabs
-                tab1, tab2, tab3, tab4 = st.tabs([
+                tab1, tab2, tab3 = st.tabs([
                     "📊 Overview - Performance Analysis",
                     "👥 Thống kê Khách hàng",
-                    "📈 Xu hướng phát triển của KS",
-                    "🔍 Phân tích nội dung review"
+                    "📈 Xu hướng phát triển của KS"
                 ])
 
                 with tab1:
